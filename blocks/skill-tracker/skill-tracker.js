@@ -1,5 +1,5 @@
 export default async function decorate(block) {
-  const csvUrl = 'https://docs.google.com/spreadsheets/d/1HxqbKg-286WJQLe72UWZmnbKyWuxwSFva3ZWpJa1tMk/edit?gid=0#gid=0'; // Replace with your CSV link
+  const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSZ5qLRTlfnKavCtDvHjgFCcyPxtSbvyvnLEqvuQvbbaQ8CyQ6l3bp7mmzFUMl1iAEyP-4Y1B2d8XLA/pub?output=csv'; // Replace with your CSV link
   const res = await fetch(csvUrl);
   const text = await res.text();
 
