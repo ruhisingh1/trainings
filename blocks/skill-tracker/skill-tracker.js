@@ -1,7 +1,9 @@
 function createBadge(level) {
+  // Convert 'basic' to 'Beginner'
+  const normalizedLevel = level.toLowerCase() === 'basic' ? 'Beginner' : level;
   const span = document.createElement('span');
-  span.className = `badge ${level.toLowerCase()}`;
-  span.textContent = level;
+  span.className = `badge ${normalizedLevel.toLowerCase()}`;
+  span.textContent = normalizedLevel;
   return span;
 }
 
@@ -60,9 +62,9 @@ function buildFilterUI(people) {
       <option value="Intermediate">Intermediate</option>
       <option value="Expert">Expert</option>
     </select>
-    <input type="text" id="keyword-search" placeholder="Search anything...">
+    <input type="text" id="keyword-search" placeholder="Keyword search">
     <button id="download-csv">Download CSV</button>
-    <button id="edit-sheet">Edit in Google Sheets</button>
+    <button id="edit-sheet">Update your skills</button>
   `;
 
   return wrapper;
@@ -111,10 +113,11 @@ export default async function decorate(block) {
       .filter(p => !nameFilter || p.name === nameFilter)
       .map(p => ({
         ...p,
-        skills: p.skills.filter(s =>
-          (!skillFilter || s.skill === skillFilter) &&
-          (!levelFilter || s.level === levelFilter)
-        )
+        skills: p.skills.filter(s => {
+          const normalizedLevel = s.level.toLowerCase() === 'basic' ? 'Beginner' : s.level;
+          return (!skillFilter || s.skill === skillFilter) &&
+                 (!levelFilter || normalizedLevel === levelFilter);
+        })
       }))
       .filter(p => {
         if (p.skills.length === 0) return false;
